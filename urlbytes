@@ -1,0 +1,31 @@
+import sys
+import urllib2
+import pandas as pd
+import time
+
+reviews = pd.read_csv("Book1.csv")
+print reviews
+a=reviews
+codes=[]
+time=[]
+i=0
+print "Timestamp -Url- Length"
+for line in a["Url"]:
+        
+        line = line.strip()
+        print "No of Url checked so far",i
+        print "Present Url under check",line
+        response = urllib2.urlopen(line)
+        html = response.read()
+        codes.append(response.code)
+        time.append(response.info()['date'])
+        print response.info()['date'],"-",response.geturl(),"-",len(html),"bytes"
+        print "No of Url checked so far",i
+        #print"Time Stamp " ,a["Interval"].values[i]
+        #time.sleep(a["Interval"].values[i])
+        i=i+1
+        
+
+print "The 5 codes checked",
+for i in xrange(0,5):
+    print codes[i]
